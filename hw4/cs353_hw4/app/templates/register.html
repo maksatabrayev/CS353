@@ -1,0 +1,42 @@
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f4f8;">
+	<div style="width: 100%; max-width: 450px; padding: 30px; background: white; border-radius: 12px; box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);">
+	  <h3 style="text-align: center; color: #007bff; font-size: 32px; margin-bottom: 30px;">Register</h3>
+	  <form action="{{ url_for('register') }}" method="post">
+		{% if message is defined and message %}
+		  <div class="alert alert-warning text-center" style="font-size: 18px; margin-bottom: 20px;">{{ message }}</div>
+		{% endif %}
+  
+		<!-- Username Input -->
+		<label for="username" style="font-size: 18px; font-weight: bold; display: block; margin-bottom: 10px;">Username:</label>
+		<div class="form-group mb-4" style="text-align: center;">
+		  <input type="text" class="form-control" id="username" name="username" placeholder="Enter name" required style="font-size: 18px; padding: 12px; margin-bottom: 20px; width: 100%;">
+		</div>
+  
+		<!-- Email Input -->
+		<label for="email" style="font-size: 18px; font-weight: bold; display: block; margin-bottom: 10px;">Email:</label>
+		<div class="form-group mb-4" style="text-align: center;">
+		  <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required style="font-size: 18px; padding: 12px; margin-bottom: 20px; width: 100%;">
+		</div>
+  
+		<!-- Password Input -->
+		<label for="password" style="font-size: 18px; font-weight: bold; display: block; margin-bottom: 10px;">Password:</label>
+		<div class="form-group mb-4" style="text-align: center;">
+		  <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required style="font-size: 18px; padding: 12px; margin-bottom: 20px; width: 100%;">
+		</div>
+  
+		<!-- Register Button -->
+		<button type="submit" class="btn btn-primary w-100" style="font-size: 18px; padding: 12px; display: block; margin-left: auto; margin-right: auto;">Register</button>
+	  </form>
+  
+	  <!-- Link to Login -->
+	  <div class="text-center mt-4">
+		<form action="{{ url_for('login') }}" method="get" style="margin: 0;">
+		  <p style="font-size: 16px; margin-top: 20px;">
+			<span>Already have an account? </span>
+			<a href="{{ url_for('login') }}" style="color: #007bff; text-decoration: none; font-size: 16px;">Login</a>
+		  </p>
+		</form>
+	  </div>
+	</div>
+  </div>
+  

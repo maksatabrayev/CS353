@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Task Analysis</h1>
+         <div class="button-container">
+            <form action="{{ url_for('tasks') }}" method="get">
+                <button class="btn btn-primary">Tasks Page</button>
+            </form>
+        </div>
+        <h2>All Tasks (Ordered by Deadlines)</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Deadline</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in all_tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.type }}</td>
+                    <td>{{ task.deadline }}</td>
+                    <td>{{ task.status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h2>Completed Tasks (Ordered by Completion Time)</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Completion Time</th>
+                    <th>Time Spent (seconds)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in completed_tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.completion_time }}</td>
+                    <td>{{ task.time_spent }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h2>Uncompleted Tasks (Ordered by Deadlines)</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in uncompleted_tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.type }}</td>
+                    <td>{{ task.deadline }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h2>Tasks Completed After Deadline</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Latency (seconds)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in late_completed_tasks %}
+                <tr>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.latency }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <h2>Number of Completed Tasks per Task Type</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Task Type</th>
+                    <th>Number of Completed Tasks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task_type in completed_tasks_by_type %}
+                <tr>
+                    <td>{{ task_type.type }}</td>
+                    <td>{{ task_type.completed_count }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
+
+
+
+
+
+

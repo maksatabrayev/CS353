@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Tasks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+</head>
+<body>
+    <div class="container">
+        {% if message is defined and message %}
+            <div class="alert-warning">{{ message }}</div>
+        {% endif %}
+        
+        <h1>Welcome, {{ username }}</h1>
+        
+        <!-- Button container with flexbox for alignment -->
+        <div class="button-container">
+            <!-- A button to direct a user to the analysis page -->
+            <form action="{{ url_for('analysis') }}" method="get">
+                <button class="btn btn-primary">Analysis Page</button>
+            </form>
+
+            <!-- Logout button -->
+            <form action="/logout" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+
+        <h2>Your Tasks</h2>
+        <div style=" overflow-y: auto;">
+            <h3> Uncompleted Tasks</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Deadline</th>
+                        <th>Creation Time</th>
+                        <th>Completion Time</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task_uncompleted in tasks_uncompleted %}
+                        <tr>
+                            <td>{{ task_uncompleted.id }}</td>
+                            <td>{{ task_uncompleted.title }}</td>
+                            <td>{{ task_uncompleted.description }}</td>
+                            <td>{{ task_uncompleted.status }}</td>
+                            <td>{{ task_uncompleted.deadline }}</td>
+                            <td>{{ task_uncompleted.creation_time }}</td>
+                            <td>{{ task_uncompleted.completion_time }}</td>
+                            <td>{{ task_uncompleted.type }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+
+        <div style=" overflow-y: auto;">
+            <h3> Completed Tasks</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Deadline</th>
+                        <th>Creation Time</th>
+                        <th>Completion Time</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task_completed in tasks_completed %}
+                        <tr>
+                            <td>{{ task_completed.id }}</td>
+                            <td>{{ task_completed.title }}</td>
+                            <td>{{ task_completed.description }}</td>
+                            <td>{{ task_completed.status }}</td>
+                            <td>{{ task_completed.deadline }}</td>
+                            <td>{{ task_completed.creation_time }}</td>
+                            <td>{{ task_completed.completion_time }}</td>
+                            <td>{{ task_completed.type }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <h3>Add a New Task</h3>
+        <div class="form-container">
+            <form action="/tasks" method="POST">
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title" required><br>
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description" required></textarea><br>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status" required>
+                    <option value="Todo">Todo</option>
+                    <option value="Completed">Completed</option>
+                </select><br>
+
+                <label for="deadline">Deadline:</label>
+                <input type="datetime-local" id="deadline" name="deadline" required><br>
+
+                <label for="type">Type:</label>
+                <select id="type" name="type" required>
+                    <option value="Health">Health</option>
+                    <option value="Job">Job</option>
+                    <option value="Financial">Financial</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Family">Family</option>
+                    <option value="Hobbies">Hobbies</option>
+                    <option value="Educational">Educational</option>
+                </select><br>
+
+                <button type="submit">Add Task</button>
+            </form>
+        </div>
+
+        <h3>Delete a Task</h3>
+        <div class="form-container">
+            <form action="/tasks" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <label for="task_id">Task ID:</label>
+                <input type="number" id="task_id" name="task_id" required><br>
+                <button type="submit">Delete Task</button>
+            </form>
+        </div>
+
+        <h3>Mark as Done</h3>
+        <div class="form-container">
+            <form action="/tasks" method="POST">
+                <input type="hidden" name="_method" value="MARK_DONE">
+                <label for="task_id">Task ID:</label>
+                <input type="number" id="task_id" name="task_id" required><br>
+                <button type="submit">Mark Completed</button>
+            </form>
+        </div>
+
+        <h3>Update a Task</h3>
+        <div class="form-container">
+            <form action="/tasks" method="POST">
+                <input type="hidden" name="_method" value="PATCH">
+                <label for="task_id">Task ID:</label>
+                <input type="number" id="task_id" name="task_id" required><br>
+
+                <label for="title">Title:</label>
+                <input type="text" id="title" name="title"><br>
+
+                <label for="description">Description:</label>
+                <textarea id="description" name="description"></textarea><br>
+
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="">-- Select Status --</option>
+                    <option value="Todo">Todo</option>
+                    <option value="Completed">Completed</option>
+                </select><br>
+
+                <label for="deadline">Deadline:</label>
+                <input type="datetime-local" id="deadline" name="deadline"><br>
+
+                <label for="type">Type:</label>
+                <select id="type" name="type">
+                    <option value="">-- Select Type --</option>
+                    <option value="Health">Health</option>
+                    <option value="Job">Job</option>
+                    <option value="Financial">Financial</option>
+                    <option value="Lifestyle">Lifestyle</option>
+                    <option value="Family">Family</option>
+                    <option value="Hobbies">Hobbies</option>
+                    <option value="Educational">Educational</option>
+                </select><br>
+
+                <button type="submit">Update Task</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
